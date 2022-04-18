@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Tabloid.Repositories;
+using Tabloid.Models;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +11,16 @@ namespace Tabloid.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
+        private readonly IPostRepository _postRepo;
+        public PostController(IPostRepository postRepository)
+        {
+            _postRepo = postRepository;
+        }
         // GET: api/<PostController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_postRepo.GetApprovedPosts());
         }
 
         // GET api/<PostController>/5
