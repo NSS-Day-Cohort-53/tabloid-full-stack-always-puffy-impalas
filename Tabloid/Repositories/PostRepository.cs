@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Tabloid.Repositories
 {
-    public class PostRepository : BaseRepository
+    public class PostRepository : BaseRepository, IPostRepository
     {
         public PostRepository(IConfiguration configuration) : base(configuration) { }
 

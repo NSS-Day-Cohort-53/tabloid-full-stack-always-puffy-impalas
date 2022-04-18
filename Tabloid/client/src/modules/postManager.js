@@ -1,10 +1,10 @@
 import { getToken } from "./authManager.js";
 
-const _apiUrl = "/api/userprofile";
+const _apiUrl = "/api/post";
 
 export const getApprovedPosts = () => {
     return getToken().then((token) => {
-        return fetch(`${_apiUrl}/posts`, {
+        return fetch(`${_apiUrl}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
