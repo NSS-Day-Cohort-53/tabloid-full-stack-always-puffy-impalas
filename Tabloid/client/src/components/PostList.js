@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Container } from "reactstrap";
 import { getApprovedPosts } from "../modules/postManager.js";
+import Post from "./Post.js";
 
 export const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -12,7 +14,13 @@ export const PostList = () => {
         getPosts();
     }, []);
 
-    return <div></div>;
+    return (
+        <Container>
+            {posts.map((p) => (
+                <Post post={p} />
+            ))}
+        </Container>
+    );
 };
 
 export default PostList;
