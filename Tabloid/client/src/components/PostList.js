@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "reactstrap";
+import { CardGroup, Container } from "reactstrap";
 import { getApprovedPosts } from "../modules/postManager.js";
 import Post from "./Post.js";
 

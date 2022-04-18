@@ -1,10 +1,14 @@
 import React from "react";
-import { Card } from "reactstrap";
+import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 
 export const Post = ({ post }) => {
     return (
         <Card>
-            {post.title} by {post.userProfile.fullName} ({post.category.name})
+            <CardBody>
+                <CardTitle tag="h5">{post.title}</CardTitle>
+                <CardSubtitle>{post.userProfile.fullName}</CardSubtitle>
+                <CardText>{post.category.name}</CardText>
+            </CardBody>
         </Card>
     );
 };
