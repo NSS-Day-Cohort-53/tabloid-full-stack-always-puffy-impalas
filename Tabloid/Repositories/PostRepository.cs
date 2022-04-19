@@ -93,8 +93,8 @@ namespace Tabloid.Repositories
                         {
                             post.Tags.Add(new Tag
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
-                                Name = reader.GetString(reader.GetOrdinal("TagName"))
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "TagName")
                             });
                         }
                     }
