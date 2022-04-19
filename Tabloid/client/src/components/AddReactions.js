@@ -5,20 +5,15 @@ import { useHistory } from "react-router-dom";
 
 export const AddReactions = () => {
     const [reaction, setReaction] = useState({ name: null, imageLocation: null })
-    const reactionUrl = "/api/reaction";
     const history = useHistory()
 
     const handlePost = (e) => {
         e.preventDefault();
-        if (reaction.name == null || reaction.imageLocation == null) {
-            window.alert("Please fill out all input fields");
-        }
-        else {
-            addReaction(reaction).then(() => {
-                setReaction({ name: null, imageLocation: null });
-                history.go();
-            })
-        }
+
+        addReaction(reaction).then(() => {
+            setReaction({ name: null, imageLocation: null });
+            history.push("/");
+        })
 
     }
 
@@ -41,7 +36,7 @@ export const AddReactions = () => {
                 }
                 } required />
             </form>
-            <button onClick={handlePost}>Submit</button>
+            <button onClick={(e) => reaction.name != null && reaction.imageLocation !== null ? handlePost(e) : null}>Submit</button>
 
         </>
     )

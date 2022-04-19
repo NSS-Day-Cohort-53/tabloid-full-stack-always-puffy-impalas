@@ -23,7 +23,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Login />
         </Route>
 
-        <Route path="/addReactions">
+        <Route exact path="/reactions/add">
           <AddReactions />
         </Route>
 
