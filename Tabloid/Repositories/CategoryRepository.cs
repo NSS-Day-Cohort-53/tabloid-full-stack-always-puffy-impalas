@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
+using Tabloid.Utils;
 
 namespace Tabloid.Repositories
 {
@@ -17,7 +18,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT id, name FROM Category Order By Name";
+                    cmd.CommandText = "SELECT Id, Name FROM Category Order By Name";
                     var reader = cmd.ExecuteReader();
 
                     var categories = new List<Category>();
@@ -26,8 +27,8 @@ namespace Tabloid.Repositories
                     {
                         categories.Add(new Category()
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("name")),
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
                         });
                     }
 
@@ -50,7 +51,7 @@ namespace Tabloid.Repositories
                         FROM Category                    
                         WHERE Id = @id                   
                     ";
-                    cmd.Parameters.AddWithValue("@id", id);
+                    DbUtils.AddParameter(cmd, "@Id", id);
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -58,8 +59,8 @@ namespace Tabloid.Repositories
                         {
                             Category category = new Category
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                Name = DbUtils.GetString(reader, "Name"),
                             };
 
                             return category;
@@ -86,7 +87,7 @@ namespace Tabloid.Repositories
                         OUTPUT INSERTED.ID
                         VALUES (
                             @Name )";
-                    cmd.Parameters.AddWithValue("@Name", category.Name);
+                    DbUtils.AddParameter(cmd, "@Name", category.Name);
 
 
                     category.Id = (int)cmd.ExecuteScalar();
@@ -108,8 +109,8 @@ namespace Tabloid.Repositories
                                 
                             WHERE Id = @id";
 
-                    cmd.Parameters.AddWithValue("@name", category.Name);
-                    cmd.Parameters.AddWithValue("@id", category.Id);
+                    DbUtils.AddParameter(cmd, "@Name", category.Name);
+                    DbUtils.AddParameter(cmd, "@Id", category.Id);
 
 
                     cmd.ExecuteNonQuery();
@@ -129,7 +130,8 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                      DELETE from Category
                      WHERE Id=@id ";
-                    cmd.Parameters.AddWithValue("@id", id);
+
+                    DbUtils.AddParameter(cmd, "@id", id);
 
                     cmd.ExecuteNonQuery();
                 }
