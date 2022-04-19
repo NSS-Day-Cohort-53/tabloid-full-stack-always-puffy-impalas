@@ -113,6 +113,7 @@ namespace Tabloid.Repositories
                 Title = reader.GetString(reader.GetOrdinal("Title")),
                 Content = reader.GetString(reader.GetOrdinal("Content")),
                 ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
+                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
                 CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                 PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
                 CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
