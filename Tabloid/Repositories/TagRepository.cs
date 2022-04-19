@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using Tabloid.Models;
+using Tabloid.Utils;
 
 namespace Tabloid.Repositories
 {
@@ -14,7 +15,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT id, name FROM Tag ORDER BY name";
+                    cmd.CommandText = "SELECT Id, Name FROM Tag Order By Name";
                     var reader = cmd.ExecuteReader();
 
                     var tags = new List<Tag>();
@@ -23,8 +24,8 @@ namespace Tabloid.Repositories
                     {
                         tags.Add(new Tag()
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("name")),
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
                         });
                     }
 
@@ -43,25 +44,29 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT Id, Name
-                    FROM Tag
-                    WHERE Tag.Id = @id
+                        SELECT Id, Name
+                        FROM Tag
+                        WHERE Tag.Id = @id
                     ";
+                    DbUtils.AddParameter(cmd, "@Id", id);
 
-                    cmd.Parameters.AddWithValue("@id", id);
-                    var reader = cmd.ExecuteReader();
-
-                    Tag tag = new Tag();
-
-                    if (reader.Read())
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        tag.Name = reader.GetString(reader.GetOrdinal("Name"));
-                        tag.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                        if (reader.Read())
+                        {
+                            Tag tag = new Tag
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            };
+
+                            return tag;
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
-
-                    reader.Close();
-
-                    return tag;
                 }
             }
         }
