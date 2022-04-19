@@ -17,7 +17,7 @@ export const PostList = () => {
     return (
         <Container>
             {posts.map((p) => (
-                <Post post={p} />
+                <Post post={p} key={`post--${p.id}`} />
             ))}
         </Container>
     );

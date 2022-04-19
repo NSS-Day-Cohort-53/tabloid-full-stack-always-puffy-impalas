@@ -27,11 +27,15 @@ namespace Tabloid.Repositories
                               u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
-                              ut.[Name] AS UserTypeName
+                              ut.[Name] AS UserTypeName,
+                              t.Id AS TagId,
+                              t.[Name] AS TagName
                          FROM Post p
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                              LEFT JOIN PostTag pt ON pt.PostId = p.Id
+                              LEFT JOIN Tag t ON pt.TagId = t.Id
                         WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()
                         ORDER BY PublishDateTime DESC";
 
@@ -84,9 +88,7 @@ namespace Tabloid.Repositories
                 },
                 Tags = new List<Tag>()
             };
-            try
-            {
-                if (!reader.IsDBNull("TagId"))
+                if (DbUtils.IsNotDbNull(reader, "TagId"))
                 {
                     post.Tags.Add(new Tag()
                     {
@@ -94,8 +96,6 @@ namespace Tabloid.Repositories
                         Name = DbUtils.GetString(reader, "TagName")
                     });
                 }
-            }
-            catch { };
             return post;
         }
     }
