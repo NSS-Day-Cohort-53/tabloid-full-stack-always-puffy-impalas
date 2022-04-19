@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import { AddReactions } from "./AddReactions";
+import CategoryList from "./CategoryList";
 import PostList from "./PostList.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -28,6 +29,9 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/categories" exact>
+          <CategoryList />
         </Route>
       </Switch>
     </main>
