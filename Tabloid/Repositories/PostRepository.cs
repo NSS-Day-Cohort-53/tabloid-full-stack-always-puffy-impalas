@@ -79,7 +79,7 @@ namespace Tabloid.Repositories
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                               LEFT JOIN PostTag pt ON pt.PostId = p.Id
                               LEFT JOIN Tag t ON pt.TagId = t.Id
-                         WHERE Id = @id";
+                         WHERE p.Id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
 
