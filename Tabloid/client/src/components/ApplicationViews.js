@@ -25,8 +25,8 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/register">
                     <Register />
                 </Route>
-                
-                <Route path="/categories">
+
+                <Route path="/categories" exact>
                   <CategoryList />
                 </Route>
               </Switch>
