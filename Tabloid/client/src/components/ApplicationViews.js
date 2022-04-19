@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import { AddReactions } from "./AddReactions";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -15,6 +16,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/login">
           <Login />
+        </Route>
+
+        <Route path="/addReactions">
+          <AddReactions />
         </Route>
 
         <Route path="/register">
