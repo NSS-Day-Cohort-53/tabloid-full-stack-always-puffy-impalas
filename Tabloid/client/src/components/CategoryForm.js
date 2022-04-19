@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { addCategory } from '../modules/categoryManager';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { addCategory } from "../modules/categoryManager";
+import { useHistory } from "react-router-dom";
 
 const CategoryForm = () => {
   const emptyCategory = {
-    name: '',
-    
+    name: "",
   };
 
   const [category, setCategory] = useState(emptyCategory);
@@ -26,7 +25,7 @@ const CategoryForm = () => {
     evt.preventDefault();
 
     addCategory(category).then(() => {
-        history.push("/categories");
+      history.push("/categories");
     });
   };
 
@@ -34,11 +33,18 @@ const CategoryForm = () => {
     <Form>
       <FormGroup>
         <Label for="name">Name</Label>
-        <Input type="text" name="name" id="name" placeholder="category name"
+        <Input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="category name"
           value={category.name}
-          onChange={handleInputChange} />
+          onChange={handleInputChange}
+        />
       </FormGroup>
-      <Button className="btn btn-primary" onClick={handleSave}>Submit</Button>
+      <Button className="btn btn-primary" onClick={handleSave}>
+        Submit
+      </Button>
     </Form>
   );
 };
