@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Category from "./Category";
 import { getAllCategories } from "../modules/categoryManager";
+import { Link } from "react-router-dom";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -26,6 +27,9 @@ const CategoryList = () => {
           ))}
         </div>
       </div>
+      <Link to="/categories/add" className="category-link">
+           Add A New Category
+          </Link>
       </div>
    
   );

@@ -19,3 +19,16 @@ export const getAllCategories = () => {
     });
 });
   };
+
+  export const addCategory = (category) => {
+    return getToken().then((token) =>
+      fetch(_apiUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(category)
+      }).then(resp => resp.json()));
+  };
+  
