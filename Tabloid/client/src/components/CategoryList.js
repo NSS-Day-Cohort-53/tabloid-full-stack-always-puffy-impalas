@@ -1,0 +1,35 @@
+import React, { useEffect, useState } from "react";
+import Category from "./Category";
+import { getAllCategories } from "../modules/categoryManager";
+
+const CategoryList = () => {
+  const [categories, setCategories] = useState([]);
+  
+
+  const getCategories = () => {
+    getAllCategories().then((categories) => setCategories(categories));
+  };
+
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  console.log(categories)
+
+  return (
+    <div>
+      <div className="container">     
+        <div className="row justify-content-center">
+            
+          {categories.map((category) => (
+            <Category category={category} key={category.id} />
+          ))}
+        </div>
+      </div>
+      </div>
+   
+  );
+};
+
+export default CategoryList;

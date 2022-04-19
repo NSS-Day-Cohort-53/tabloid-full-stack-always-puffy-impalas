@@ -36,6 +36,10 @@ export default function Header({ isLoggedIn }) {
                   <a aria-current="page" className="nav-link"
                     style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/categories">Categories</NavLink>
+                </NavItem>
+                
               </>
             }
             {!isLoggedIn &&
