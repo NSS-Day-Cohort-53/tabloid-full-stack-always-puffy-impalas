@@ -15,7 +15,6 @@ const CategoryList = () => {
     getCategories();
   }, []);
 
-  console.log(categories)
 
   return (
     <div>
