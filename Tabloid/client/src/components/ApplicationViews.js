@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import CategoryList from "./CategoryList";
 import PostList from "./PostList.js";
 import { PostDetails } from "./PostDetails.js";
 
@@ -27,7 +28,12 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/register">
                     <Register />
                 </Route>
-            </Switch>
-        </main>
-    );
-}
+
+                <Route path="/categories" exact>
+                  <CategoryList />
+                </Route>
+              </Switch>
+            </main>
+          );
+};
+      
