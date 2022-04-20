@@ -25,8 +25,8 @@ const CategoryList = () => {
       <div className="container">
         <div className=" mt-4 row justify-content-center">
           {categories.map((category) => (
-            <ListGroupItem><Category category={category} key={category.id} />
-            <Link to={`/categories/edit/${category.id}`}>Edit</Link>{" "}
+            <ListGroupItem key={`editlink--${category.id}`}><Category category={category} key={category.id} />
+            <Link to={`/categories/edit/${category.id}`} key={`editlink--${category.id}`}>Edit</Link>{" "}
             </ListGroupItem>
           ))}
         </div>

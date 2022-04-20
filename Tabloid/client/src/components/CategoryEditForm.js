@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input} from "reactstrap";
 import { editCategory, getCategoryById } from "../modules/categoryManager";
 import { useHistory, useParams } from "react-router-dom";
  
