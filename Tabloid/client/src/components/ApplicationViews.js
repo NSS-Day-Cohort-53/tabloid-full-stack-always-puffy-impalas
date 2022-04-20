@@ -7,6 +7,7 @@ import { AddReactions } from "./AddReactions";
 import CategoryList from "./CategoryList";
 import PostList from "./PostList.js";
 import CategoryForm from "./CategoryForm";
+import CategoryEditForm from "./CategoryEditForm";
 import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 
@@ -48,6 +49,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/categories/add" exact>
         {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/categories/edit/:id" >
+        {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route exact path="/reactions/add">
