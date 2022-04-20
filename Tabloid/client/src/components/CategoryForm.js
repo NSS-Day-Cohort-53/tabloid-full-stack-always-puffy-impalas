@@ -4,11 +4,9 @@ import { addCategory } from "../modules/categoryManager";
 import { useHistory } from "react-router-dom";
 
 const CategoryForm = () => {
-  const emptyCategory = {
-    name: "",
-  };
+  
 
-  const [category, setCategory] = useState(emptyCategory);
+  const [category, setCategory] = useState({ name: null});
   const history = useHistory();
 
   const handleInputChange = (evt) => {
@@ -42,7 +40,7 @@ const CategoryForm = () => {
           onChange={handleInputChange}
         />
       </FormGroup>
-      <Button className="btn btn-primary" onClick={handleSave}>
+      <Button disabled={!category.name} className="btn btn-primary" onClick={handleSave}>
         Submit
       </Button>
     </Form>
