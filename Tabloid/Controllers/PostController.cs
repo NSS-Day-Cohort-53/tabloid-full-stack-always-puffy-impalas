@@ -55,6 +55,12 @@ namespace Tabloid.Controllers
             }
             return Ok(post);
         }
+        [HttpGet("PostReaction")]
+        public IActionResult PostReaction()
+        {
+            return Ok(_postRepo.GetPostReactions());
+        }
+
         [HttpPost("PostReaction")]
         public IActionResult PostReaction(PostReaction postReaction)
         {

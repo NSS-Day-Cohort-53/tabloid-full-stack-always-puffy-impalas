@@ -123,6 +123,33 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        public List<PostReaction> GetPostReactions()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, ReactionId, PostId, UserProfileId 
+                                        FROM PostReaction";
+                    var reader = cmd.ExecuteReader();
+                    List<PostReaction> postReactions = new List<PostReaction>();
+                    while (reader.Read())
+                    {
+                        PostReaction postReaction = new PostReaction
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                            ReactionId = DbUtils.GetInt(reader, "ReactionId"),
+                            PostId = DbUtils.GetInt(reader, "PostId")
+                        };
+                        postReactions.Add(postReaction);
+                    }
+                    conn.Close();
+                    return postReactions;
+                }
+            }
+        }
 
         private Post NewPostFromReader(SqlDataReader reader)
         {

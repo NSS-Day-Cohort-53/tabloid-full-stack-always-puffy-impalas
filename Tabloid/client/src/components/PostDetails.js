@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardImg, CardText, CardTitle, Container } from "reactstrap";
-import { addReactionToPost, getPostById } from "../modules/postManager.js";
+import { addReactionToPost, getPostById, getReactionPostList } from "../modules/postManager.js";
 import { getReactions } from "../modules/reactionManager.js";
 import "../index.css";
 
 export const PostDetails = () => {
     const [post, setPost] = useState({});
     const [reactions, setReactions] = useState([])
+    const [postReactions, setPostReactions] = useState([])
     const { id } = useParams();
     const getThePost = () => {
         getPostById(id).then((post) => setPost(post));
@@ -17,8 +18,11 @@ export const PostDetails = () => {
         getThePost();
         getReactions().then((data) => {
             setReactions(data)
-        })
+        });
+        getReactionPostList().then((data) => setPostReactions(data))
     }, []);
+
+
 
 
     return (
@@ -40,8 +44,10 @@ export const PostDetails = () => {
                                 postId: post.id,
                                 reactionId: r.id
                             }
-                            addReactionToPost(copy)
-                        }}><img src={r.imageLocation} /></button>
+                            addReactionToPost(copy).then(() => {
+                                getReactionPostList().then(data => setPostReactions(data))
+                            })
+                        }}><img src={r.imageLocation} />{postReactions.filter(react => react.reactionId === r.id && react.postId === post.id).length}</button>
                     })}
                 </div>
             </Card>
