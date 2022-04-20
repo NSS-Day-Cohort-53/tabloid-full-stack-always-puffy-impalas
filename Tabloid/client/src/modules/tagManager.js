@@ -28,6 +28,11 @@ export const createTag = (tag) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(tag),
-      }).then((resp) => resp.json())
-    );
-  };
+    }).then((resp) => {
+        if (resp.ok) {
+            return resp.json();
+        } else {
+            throw new Error("Unknown error creating tag");
+        }
+    })
+)};

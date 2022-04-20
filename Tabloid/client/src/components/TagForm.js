@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 const TagForm = () => {
 
 
-  const [tag, setTag] = useState({ name: null});
+  const [tag, setTag] = useState({ name: ""});
   const history = useHistory();
 
   const handleInputChange = (evt) => {
