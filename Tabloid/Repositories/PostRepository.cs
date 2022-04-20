@@ -105,13 +105,19 @@ namespace Tabloid.Repositories
                 }
             }
         }
+<<<<<<< HEAD
         public void AddPostReaction(PostReaction postReaction)
+=======
+
+        public void AddPost(Post post)
+>>>>>>> main
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
+<<<<<<< HEAD
                     cmd.CommandText = @"INSERT INTO PostReaction (PostId, ReactionId, UserProfileId)
                                         OUTPUT INSERTED.ID
                                         VALUES (@postId, @reactionId, @userProfileId)";
@@ -151,6 +157,25 @@ namespace Tabloid.Repositories
             }
         }
 
+=======
+                    cmd.CommandText = @"INSERT INTO Post (Title, Content, ImageLocation, CreateDateTime, PublishDateTime, IsApproved, CategoryId, UserProfileId)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@title, @content, @imageLocation, @createDate, @publishDate, @isApproved, @categoryId, @userProfileId)";
+
+                    DbUtils.AddParameter(cmd, "@title", post.Title);
+                    DbUtils.AddParameter(cmd, "@content", post.Content);
+                    DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@createDate", post.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@publishDate", post.PublishDateTime);
+                    DbUtils.AddParameter(cmd, "@isApproved", post.IsApproved);
+                    DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@userProfileId", post.UserProfileId);
+
+                    post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+>>>>>>> main
         private Post NewPostFromReader(SqlDataReader reader)
         {
             Post post = new Post()
