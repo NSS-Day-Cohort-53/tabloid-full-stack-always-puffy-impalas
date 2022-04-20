@@ -3,9 +3,11 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import { AddReactions } from "./AddReactions";
 import CategoryList from "./CategoryList";
 import PostList from "./PostList.js";
 import CategoryForm from "./CategoryForm";
+import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -27,6 +29,10 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/posts/:id">
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
+        <Route path="/tags" exact>
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/posts/:id">{isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}</Route>
 
         <Route path="/login">
           <Login />
@@ -44,7 +50,11 @@ export default function ApplicationViews({ isLoggedIn }) {
         {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
+        <Route exact path="/reactions/add">
+          <AddReactions />
+        </Route>
+        
       </Switch>
     </main>
   );
-}
+};
