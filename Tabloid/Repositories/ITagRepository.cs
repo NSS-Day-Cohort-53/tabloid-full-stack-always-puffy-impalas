@@ -3,9 +3,10 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    public interface IPostRepository
+    public interface ITagRepository
     {
-        List<Post> GetApprovedPosts();
-        Post GetById(int id);
+        List<Tag> GetAll();
+
+        Tag GetTagById(int Id); 
     }
 }

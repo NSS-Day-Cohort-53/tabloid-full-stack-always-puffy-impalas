@@ -53,6 +53,58 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public Post GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT p.Id, p.Title, p.Content, 
+                              p.ImageLocation AS HeaderImage,
+                              p.CreateDateTime, p.PublishDateTime, p.IsApproved,
+                              p.CategoryId, p.UserProfileId,
+                              c.[Name] AS CategoryName,
+                              u.FirstName, u.LastName, u.DisplayName, 
+                              u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
+                              u.UserTypeId, 
+                              ut.[Name] AS UserTypeName,
+                              t.Id AS TagId,
+                              t.[Name] AS TagName
+                         FROM Post p
+                              LEFT JOIN Category c ON p.CategoryId = c.id
+                              LEFT JOIN UserProfile u ON p.UserProfileId = u.id
+                              LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                              LEFT JOIN PostTag pt ON pt.PostId = p.Id
+                              LEFT JOIN Tag t ON pt.TagId = t.Id
+                         WHERE p.Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Post post = null;
+                    if (reader.Read())
+                    {
+                        post = NewPostFromReader(reader);
+                        while (reader.Read())
+                        {
+                            post.Tags.Add(new Tag
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "TagName")
+                            });
+                        }
+                    }
+
+                    reader.Close();
+
+                    return post;
+                }
+            }
+        }
         private Post NewPostFromReader(SqlDataReader reader)
         {
             Post post = new Post()
@@ -61,6 +113,7 @@ namespace Tabloid.Repositories
                 Title = reader.GetString(reader.GetOrdinal("Title")),
                 Content = reader.GetString(reader.GetOrdinal("Content")),
                 ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
+                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
                 CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                 PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
                 CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
