@@ -1,5 +1,5 @@
 import { getToken } from "./authManager.js";
-import { useParams } from "react-router-dom";
+
 
 const _apiUrl = "/api/Category";
 
