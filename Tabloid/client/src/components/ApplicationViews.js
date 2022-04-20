@@ -10,6 +10,7 @@ import CategoryForm from "./CategoryForm";
 import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 import TagForm from "./TagForm";
+import PostForm from "./PostForm.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
     return (

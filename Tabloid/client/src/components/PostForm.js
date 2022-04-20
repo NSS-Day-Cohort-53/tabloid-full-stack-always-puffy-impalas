@@ -87,7 +87,9 @@ export const PostForm = () => {
                         onInput={(e) => setPublicationDate(e.target.value)}
                     />
                 </FormGroup>
-                <Button onClick={makePost}>Submit</Button>
+                <Button disabled={!title || !content || !chosenCategory || chosenCategory === 0} onClick={makePost}>
+                    Submit
+                </Button>
             </Form>
         </Container>
     );
