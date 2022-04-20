@@ -22,10 +22,10 @@ export const PostForm = () => {
         const post = {
             title,
             content,
-            ImageLocation: header,
-            PublishDateTime: publicationDate,
-            IsApproved: true,
-            CategoryId: chosenCategory === 0 ? null : chosenCategory,
+            imageLocation: header,
+            publishDateTime: publicationDate,
+            isApproved: true,
+            categoryId: chosenCategory === 0 ? null : chosenCategory,
         };
         addPost(post).then((newPost) => history.push(`/posts/${newPost.id}`));
     };
