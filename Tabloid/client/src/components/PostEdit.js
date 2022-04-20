@@ -9,6 +9,16 @@ export const PostEdit = () => {
     const [categories, setCategories] = useState([]);
     const { id } = useParams();
 
+    const handleInputChange = (evt) => {
+        const value = evt.target.value;
+        const key = evt.target.id;
+
+        const postCopy = { ...post };
+
+        postCopy[key] = value;
+        setPost(postCopy);
+    };
+
     useEffect(() => {
         getPostById(id).then(setPost);
         getAllCategories().then(setCategories);
@@ -21,43 +31,43 @@ export const PostEdit = () => {
                     <Label for="titleInput">Title</Label>
                     <Input
                         required
-                        id="titleInput"
+                        id="title"
                         name="title"
                         type="text"
                         value={post.title}
-                        onInput={(e) => setPost.title(e.target.value)}
+                        onInput={handleInputChange}
                     />
                 </FormGroup>
                 <FormGroup>
                     <Label for="contentInput">Content</Label>
                     <Input
                         required
-                        id="contentInput"
+                        id="content"
                         name="content"
                         type="textarea"
                         value={post.content}
-                        onInput={(e) => setPost.content(e.target.value)}
+                        onInput={handleInputChange}
                     />
                 </FormGroup>
                 <FormGroup>
                     <Label for="headerInput">Header Image URL</Label>
                     <Input
-                        id="headerInput"
+                        id="imageLocation"
                         name="header"
                         type="url"
                         value={post.imageLocation === null ? "" : post.imageLocation}
-                        onInput={(e) => setPost.imageLocation(e.target.value)}
+                        onInput={handleInputChange}
                     />
                 </FormGroup>
                 <FormGroup>
                     <Label for="categoryInput">Category</Label>
                     <Input
-                        id="categoryInput"
+                        id="categoryId"
                         required
                         name="category"
                         type="select"
                         value={post.categoryId}
-                        onChange={(e) => setPost.categoryId(parseInt(e.target.value))}
+                        onChange={handleInputChange}
                     >
                         <option value="0">Select A Category</option>
                         {categories?.map((cat) => (
@@ -70,11 +80,11 @@ export const PostEdit = () => {
                 <FormGroup>
                     <Label for="dateInput">Date</Label>
                     <Input
-                        id="dateInput"
+                        id="publishDateTime"
                         name="date"
                         type="datetime-local"
-                        value={post.publishDateTime}
-                        onInput={(e) => setPost.publishDateTime(e.target.value)}
+                        value={post.publishDateTime === null ? "" : post.publishDateTime}
+                        onInput={handleInputChange}
                     />
                 </FormGroup>
                 <Button disabled={!post.title || !post.content || !post.categoryId}>Submit</Button>
