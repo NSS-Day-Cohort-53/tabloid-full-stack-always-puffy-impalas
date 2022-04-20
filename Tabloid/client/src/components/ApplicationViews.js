@@ -9,7 +9,7 @@ import PostList from "./PostList.js";
 import CategoryForm from "./CategoryForm";
 import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
-import PostForm from "./PostForm.js";
+import TagForm from "./TagForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
     return (
@@ -22,9 +22,19 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/posts" exact>
                     {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
                 </Route>
-                <Route path="/posts/add" exact>
-                    {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+
+                <Route path="/posts/add">{isLoggedIn ? <PostForm /> : <Redirect to="/login" />}</Route>
+
+                <Route path="/login">
+                    <Login />
                 </Route>
+
+                <Route path="/posts/:id">{isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}</Route>
+                <Route path="/tags" exact>
+                    {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/tags/add">{isLoggedIn ? <TagForm /> : <Redirect to="/login" />}</Route>
 
                 <Route path="/posts/:id">{isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}</Route>
 
@@ -34,10 +44,6 @@ export default function ApplicationViews({ isLoggedIn }) {
 
                 <Route path="/register">
                     <Register />
-                </Route>
-
-                <Route path="/tags" exact>
-                    {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/categories" exact>

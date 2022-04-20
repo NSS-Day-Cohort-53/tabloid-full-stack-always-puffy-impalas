@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tabloid.Models;
 using Tabloid.Repositories;
 
 namespace Tabloid.Controllers
@@ -33,5 +34,12 @@ namespace Tabloid.Controllers
             return Ok(tag);
         }
 
+        [HttpPost]
+        public IActionResult Post(Tag tag)
+        {
+            _tagRepo.CreateTag(tag);
+
+            return CreatedAtAction("Get", new { id = tag.Id }, tag);
+        }
     }
 }
