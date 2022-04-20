@@ -14,8 +14,8 @@ export const AddReactions = () => {
             setReaction({ name: null, imageLocation: null });
             history.push("/");
         })
-
     }
+
 
     return (
         <>
@@ -36,7 +36,7 @@ export const AddReactions = () => {
                 }
                 } required />
             </form>
-            <button onClick={(e) => reaction.name != null && reaction.imageLocation !== null ? handlePost(e) : null}>Submit</button>
+            <button disabled={!reaction.name || !reaction.imageLocation} onClick={handlePost}>Submit</button>
 
         </>
     )
