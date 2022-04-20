@@ -8,5 +8,6 @@ namespace Tabloid.Repositories
         List<Post> GetApprovedPosts();
         Post GetById(int id);
         void AddPost(Post post);
+        void UpdatePost(Post post);
     }
 }

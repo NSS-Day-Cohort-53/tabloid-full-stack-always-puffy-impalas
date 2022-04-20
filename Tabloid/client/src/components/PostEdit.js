@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Container, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { getAllCategories } from "../modules/categoryManager.js";
-import { getPostById } from "../modules/postManager.js";
+import { getPostById, putPost } from "../modules/postManager.js";
 
 export const PostEdit = () => {
     const [post, setPost] = useState({});
     const [categories, setCategories] = useState([]);
     const { id } = useParams();
+    const history = useHistory();
 
     const handleInputChange = (evt) => {
         const value = evt.target.value;
@@ -17,6 +19,10 @@ export const PostEdit = () => {
 
         postCopy[key] = value;
         setPost(postCopy);
+    };
+
+    const updatePost = () => {
+        putPost(post).then(() => history.push(`/posts/${post.id}`));
     };
 
     useEffect(() => {
@@ -87,7 +93,10 @@ export const PostEdit = () => {
                         onInput={handleInputChange}
                     />
                 </FormGroup>
-                <Button disabled={!post.title || !post.content || !post.categoryId}>Submit</Button>
+                <Button disabled={!post.title || !post.content || !post.categoryId} onClick={(e) => updatePost()}>
+                    Save
+                </Button>
+                <Button onClick={(e) => history.push(`/posts`)}>Cancel</Button>
             </Form>
         </Container>
     );
