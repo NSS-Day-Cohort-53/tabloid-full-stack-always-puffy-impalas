@@ -49,7 +49,7 @@ export const addPost = (post) => {
             if (res.ok) {
                 return res.json();
             } else {
-                throw new Error("Unknown error getting posts");
+                throw new Error("Unknown error posting post");
             }
         });
     });

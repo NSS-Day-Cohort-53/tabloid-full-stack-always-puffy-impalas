@@ -17,14 +17,15 @@ export const PostForm = () => {
         getAllCategories().then((cats) => setCategories(cats));
     };
 
-    const makePost = () => {
+    const makePost = (e) => {
+        e.preventDefault();
         const post = {
             title,
             content,
             ImageLocation: header,
             PublishDateTime: publicationDate,
             IsApproved: true,
-            CategoryId: chosenCategory,
+            CategoryId: chosenCategory === 0 ? null : chosenCategory,
         };
         addPost(post).then((newPost) => history.push(`/posts/${newPost.id}`));
     };
@@ -38,11 +39,18 @@ export const PostForm = () => {
             <Form>
                 <FormGroup>
                     <Label for="titleInput">Title</Label>
-                    <Input id="titleInput" name="title" type="text" onInput={(e) => setTitle(e.target.value)} />
+                    <Input
+                        required
+                        id="titleInput"
+                        name="title"
+                        type="text"
+                        onInput={(e) => setTitle(e.target.value)}
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for="contentInput">Content</Label>
                     <Input
+                        required
                         id="contentInput"
                         name="content"
                         type="textarea"
@@ -57,11 +65,12 @@ export const PostForm = () => {
                     <Label for="categoryInput">Category</Label>
                     <Input
                         id="categoryInput"
+                        required
                         name="category"
                         type="select"
                         onChange={(e) => setChosenCategory(parseInt(e.target.value))}
                     >
-                        <option value={null}>Select A Category</option>
+                        <option value="0">Select A Category</option>
                         {categories?.map((cat) => (
                             <option key={`cat--${cat.id}`} value={cat.id}>
                                 {cat.name}
