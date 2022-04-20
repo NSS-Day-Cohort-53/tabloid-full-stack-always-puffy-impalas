@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import { getAllCategories } from "../modules/categoryManager.js";
+import { addPost } from "../modules/postManager.js";
 
 export const PostForm = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [header, setHeader] = useState("");
+    const [header, setHeader] = useState(null);
     const [categories, setCategories] = useState([]);
     const [chosenCategory, setChosenCategory] = useState(null);
-    const [publicationDate, setPublicationDate] = useState("");
+    const [publicationDate, setPublicationDate] = useState(null);
+    const history = useHistory();
 
     const getCategories = () => {
         getAllCategories().then((cats) => setCategories(cats));
+    };
+
+    const makePost = () => {
+        const post = {
+            title,
+            content,
+            ImageLocation: header,
+            PublishDateTime: publicationDate,
+            IsApproved: true,
+            CategoryId: chosenCategory,
+        };
+        addPost(post).then((newPost) => history.push(`/posts/${newPost.id}`));
     };
 
     useEffect(() => {
@@ -63,7 +78,7 @@ export const PostForm = () => {
                         onInput={(e) => setPublicationDate(e.target.value)}
                     />
                 </FormGroup>
-                <Button>Submit</Button>
+                <Button onClick={makePost}>Submit</Button>
             </Form>
         </Container>
     );
