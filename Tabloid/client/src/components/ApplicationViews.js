@@ -11,6 +11,7 @@ import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 import TagForm from "./TagForm";
 import PostForm from "./PostForm.js";
+import { PostEdit } from "./PostEdit.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
     return (
@@ -26,18 +27,15 @@ export default function ApplicationViews({ isLoggedIn }) {
 
                 <Route path="/posts/add">{isLoggedIn ? <PostForm /> : <Redirect to="/login" />}</Route>
 
-                <Route path="/login">
-                    <Login />
-                </Route>
+                <Route path="/posts/edit/:id">{isLoggedIn ? <PostEdit /> : <Redirect to="/login" />}</Route>
 
                 <Route path="/posts/:id">{isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}</Route>
+
                 <Route path="/tags" exact>
                     {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/tags/add">{isLoggedIn ? <TagForm /> : <Redirect to="/login" />}</Route>
-
-                <Route path="/posts/:id">{isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}</Route>
 
                 <Route path="/login">
                     <Login />
