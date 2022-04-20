@@ -35,3 +35,16 @@ export const getPostById = (id) => {
         });
     });
 };
+
+export const addReactionToPost = (postReaction) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/postReaction`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postReaction)
+        })
+    })
+}

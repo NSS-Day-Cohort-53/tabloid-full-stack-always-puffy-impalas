@@ -105,6 +105,25 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        public void AddPostReaction(PostReaction postReaction)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO PostReaction (PostId, ReactionId, UserProfileId)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@postId, @reactionId, @userProfileId)";
+                    cmd.Parameters.AddWithValue("@postId", postReaction.PostId);
+                    cmd.Parameters.AddWithValue("@reactionId", postReaction.ReactionId);
+                    cmd.Parameters.AddWithValue("@userProfileId", postReaction.UserProfileId);
+
+                    postReaction.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
         private Post NewPostFromReader(SqlDataReader reader)
         {
             Post post = new Post()

@@ -55,6 +55,14 @@ namespace Tabloid.Controllers
             }
             return Ok(post);
         }
+        [HttpPost("PostReaction")]
+        public IActionResult PostReaction(PostReaction postReaction)
+        {
+            var user = GetCurrentUserProfile();
+            postReaction.UserProfileId = user.Id;
+            _postRepo.AddPostReaction(postReaction);
+            return Ok();
+        }
 
         // POST api/<PostController>
         [HttpPost]
