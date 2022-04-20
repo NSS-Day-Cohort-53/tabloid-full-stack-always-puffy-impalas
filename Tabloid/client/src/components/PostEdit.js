@@ -77,7 +77,7 @@ export const PostEdit = () => {
                         onInput={(e) => setPost.publishDateTime(e.target.value)}
                     />
                 </FormGroup>
-                <Button>Submit</Button>
+                <Button disabled={!post.title || !post.content || !post.categoryId}>Submit</Button>
             </Form>
         </Container>
     );
