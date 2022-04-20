@@ -6,6 +6,7 @@ import Hello from "./Hello";
 import { AddReactions } from "./AddReactions";
 import CategoryList from "./CategoryList";
 import PostList from "./PostList.js";
+import CategoryForm from "./CategoryForm";
 import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 
@@ -21,6 +22,13 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/login">
+          <Login />
+        </Route>
+
+        <Route path="/posts/:id">
+          {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
+        </Route>
         <Route path="/tags" exact>
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
         </Route>
@@ -30,16 +38,22 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Login />
         </Route>
 
-        <Route exact path="/reactions/add">
-          <AddReactions />
-        </Route>
-
         <Route path="/register">
           <Register />
         </Route>
+
         <Route path="/categories" exact>
-          <CategoryList />
+        {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
+
+        <Route path="/categories/add" exact>
+        {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route exact path="/reactions/add">
+          <AddReactions />
+        </Route>
+        
       </Switch>
     </main>
   );
