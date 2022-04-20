@@ -8,5 +8,7 @@ namespace Tabloid.Repositories
         List<Tag> GetAll();
 
         Tag GetTagById(int Id); 
+
+        void CreateTag(Tag tag);
     }
 }

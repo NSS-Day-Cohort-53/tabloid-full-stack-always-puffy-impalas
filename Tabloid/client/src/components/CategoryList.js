@@ -27,7 +27,6 @@ const CategoryList = () => {
           {categories.map((category) => (
             <ListGroupItem><Category category={category} key={category.id} />
             <Link to={`/categories/edit/${category.id}`}>Edit</Link>{" "}
-            <Link to={`/categories/delete/${category.id}`}>Delete</Link>
             </ListGroupItem>
           ))}
         </div>

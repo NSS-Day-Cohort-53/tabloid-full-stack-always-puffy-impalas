@@ -6,7 +6,6 @@ const Category = ({ category }) => {
   return (
     <Card>
       <CardBody>
-
         <p>{category.name}</p>
       </CardBody>
     </Card>
