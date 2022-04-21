@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import { Card, CardBody, CardLink, CardSubtitle, CardText, CardTitle } from "reactstrap";
 
 export const Post = ({ post }) => {
     return (
@@ -11,6 +11,7 @@ export const Post = ({ post }) => {
                 </CardTitle>
                 <CardSubtitle>{post.userProfile.fullName}</CardSubtitle>
                 <CardText>{post.category.name}</CardText>
+                <CardLink href={`/posts/edit/${post.id}`}>Edit</CardLink>
             </CardBody>
         </Card>
     );
