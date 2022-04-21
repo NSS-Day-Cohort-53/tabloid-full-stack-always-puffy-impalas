@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tag from "./Tag";
 import { getAllTags } from "../modules/tagManager";
 import { Link } from "react-router-dom";
+import { ListGroupItem } from "reactstrap";
 
 export const TagList = () => {
   const [tags, setTags] = useState([]);
@@ -25,7 +26,9 @@ export const TagList = () => {
       <div className="container">
         <div className="row justify-content-center">
           {tags.map((tag) => (
-            <Tag tag={tag} key={tag.id} />
+            <ListGroupItem key={`link--${tag.id}`}><Tag tag={tag} key={tag.id} />
+            <Link to={`/tags/edit/${tag.id}`}>Edit</Link>
+            </ListGroupItem>
           ))}
         </div>
       </div>

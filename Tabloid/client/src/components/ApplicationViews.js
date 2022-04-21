@@ -12,6 +12,7 @@ import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 import TagForm from "./TagForm";
 import PostForm from "./PostForm.js";
+import TagEdit from "./TagEdit.js"
 import { PostEdit } from "./PostEdit.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -45,6 +46,10 @@ export default function ApplicationViews({ isLoggedIn }) {
                 </Route>
 
                 <Route path="/tags/add">{isLoggedIn ? <TagForm /> : <Redirect to="/login" />}</Route>
+
+                <Route path="/tags/edit/:id(\d+)" >
+                    {isLoggedIn ? <TagEdit /> : <Redirect to="/login" />}
+                </Route>
 
                 <Route path="/categories" exact>
                     {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
