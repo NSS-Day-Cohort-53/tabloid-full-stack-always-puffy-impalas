@@ -49,7 +49,8 @@ const CategoryEditForm = () => {
     </FormGroup>
     <Button disabled={!category.name} className="btn btn-primary" onClick={handleSave}>
       Submit
-    </Button>
+    </Button> {" "}
+    <Button onClick={(e) => history.push(`/posts`)}>Cancel</Button>
   </Form>
   );
 };
