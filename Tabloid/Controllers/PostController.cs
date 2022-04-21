@@ -96,6 +96,7 @@ namespace Tabloid.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _postRepo.Delete(id);
         }
 
         private UserProfile GetCurrentUserProfile()

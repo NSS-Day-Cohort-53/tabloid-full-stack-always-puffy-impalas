@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {
     Card,
@@ -12,14 +13,18 @@ import {
     ModalBody,
     ModalFooter,
 } from "reactstrap";
-import { getPostById } from "../modules/postManager.js";
+import { getPostById, deletePost } from "../modules/postManager.js";
 
 export const PostDetails = () => {
     const [post, setPost] = useState({});
     const [showModal, setModal] = useState(false);
     const { id } = useParams();
+    const history = useHistory();
     const getThePost = () => {
         getPostById(id).then((post) => setPost(post));
+    };
+    const doDelete = () => {
+        deletePost(post.id).then(() => history.push(`/posts`));
     };
     useEffect(() => {
         getThePost();
@@ -46,7 +51,9 @@ export const PostDetails = () => {
                             <ModalHeader toggle={() => setModal(!showModal)}>Delete {post.title}?</ModalHeader>
                             <ModalBody>Are you sure you want to delete this post? This cannot be undone.</ModalBody>
                             <ModalFooter>
-                                <Button color="danger">Delete</Button>
+                                <Button color="danger" onClick={() => doDelete()}>
+                                    Delete
+                                </Button>
                                 <Button onClick={() => setModal(!showModal)}>Cancel</Button>
                             </ModalFooter>
                         </Modal>
