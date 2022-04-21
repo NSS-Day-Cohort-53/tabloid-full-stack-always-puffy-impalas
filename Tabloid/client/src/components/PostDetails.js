@@ -32,6 +32,15 @@ export const PostDetails = () => {
     const doDelete = () => {
         deletePost(post.id).then(() => history.push(`/posts`));
     };
+    const doSubscribe = () => {
+        if (isSubbed) {
+            //unsubscribe
+            setSubbed(!isSubbed);
+        } else {
+            //subscribe
+            setSubbed(!isSubbed);
+        }
+    };
     useEffect(() => {
         getThePost();
         getReactions().then((data) => {
@@ -51,8 +60,7 @@ export const PostDetails = () => {
                         <small
                             className="text-muted"
                             onClick={() => {
-                                console.log("yo");
-                                setSubbed(!isSubbed);
+                                doSubscribe();
                             }}
                         >
                             Click to {!isSubbed ? "subscribe" : "unsubscribe"} to {post.userProfile?.displayName}
