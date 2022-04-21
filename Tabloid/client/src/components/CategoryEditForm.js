@@ -14,7 +14,7 @@ const CategoryEditForm = () => {
 
   useEffect(() => {
     getCategoryById(id).then((category) => setCategory(category));
-  }, []);
+  }, [id]);
 
   const handleInputChange = (evt) => {
     const value = evt.target.value;
