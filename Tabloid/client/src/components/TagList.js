@@ -26,7 +26,7 @@ export const TagList = () => {
       <div className="container">
         <div className="row justify-content-center">
           {tags.map((tag) => (
-            <ListGroupItem><Tag tag={tag} key={tag.id} />
+            <ListGroupItem key={`link--${tag.id}`}><Tag tag={tag} key={tag.id} />
             <Link to={`/tags/edit/${tag.id}`}>Edit</Link>
             </ListGroupItem>
           ))}

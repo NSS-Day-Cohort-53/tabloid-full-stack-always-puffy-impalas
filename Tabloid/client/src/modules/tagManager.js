@@ -30,7 +30,7 @@ export const getTagById = (id) => {
         if (res.ok) {
           return res.json();
         } else {
-          throw new Error("Unknown Error Getting Tags");
+          throw new Error("Unknown Error Getting Tag");
         }
       });
     });

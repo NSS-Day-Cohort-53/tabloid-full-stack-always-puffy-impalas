@@ -43,7 +43,7 @@ const TagEdit = () => {
         name="name"
         id="name"
         placeholder={tag.name}
-        value={tag.name}
+        value={tag.name || ""}
         onChange={handleInputChange}
       />
     </FormGroup>

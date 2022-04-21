@@ -47,7 +47,7 @@ export default function ApplicationViews({ isLoggedIn }) {
 
                 <Route path="/tags/add">{isLoggedIn ? <TagForm /> : <Redirect to="/login" />}</Route>
 
-                <Route path="/tags/edit/:id" >
+                <Route path="/tags/edit/:id(\d+)" >
                     {isLoggedIn ? <TagEdit /> : <Redirect to="/login" />}
                 </Route>
 
