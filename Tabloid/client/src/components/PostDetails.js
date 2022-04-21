@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardImg, CardText, CardTitle, Container, Button, Modal, ModalHeader } from "reactstrap";
+import {
+    Card,
+    CardImg,
+    CardText,
+    CardTitle,
+    Container,
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+} from "reactstrap";
 import { getPostById } from "../modules/postManager.js";
 
 export const PostDetails = () => {
@@ -12,7 +23,7 @@ export const PostDetails = () => {
     };
     useEffect(() => {
         getThePost();
-    }, []);
+    }, [id]);
     return (
         <Container>
             <Card>
@@ -26,13 +37,21 @@ export const PostDetails = () => {
                     <small className="text-muted">{post.publishDateTime}</small>
                 </CardText>
                 {post.isCurrentUserAuthor && (
-                    <Button onClick={() => setModal(!showModal)} color="danger">
-                        Delete
-                    </Button>
+                    <>
+                        <Button onClick={() => setModal(!showModal)} color="danger">
+                            Delete
+                        </Button>
+
+                        <Modal isOpen={showModal} toggle={() => setModal(!showModal)}>
+                            <ModalHeader toggle={() => setModal(!showModal)}>Delete {post.title}?</ModalHeader>
+                            <ModalBody>Are you sure you want to delete this post? This cannot be undone.</ModalBody>
+                            <ModalFooter>
+                                <Button color="danger">Delete</Button>
+                                <Button onClick={() => setModal(!showModal)}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </>
                 )}
-                <Modal isOpen={showModal} toggle={() => setModal(!showModal)}>
-                    <ModalHeader toggle={() => setModal(!showModal)}>Delete {post.title}?</ModalHeader>
-                </Modal>
             </Card>
         </Container>
     );
