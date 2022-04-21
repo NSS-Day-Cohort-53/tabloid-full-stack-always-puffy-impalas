@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Category from "./Category";
 import { getAllCategories } from "../modules/categoryManager";
 import { Link } from "react-router-dom";
-import { ListGroupItem } from "reactstrap";
+import { ListGroupItem, Button } from "reactstrap";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -11,6 +11,7 @@ const CategoryList = () => {
     getAllCategories().then((categories) => setCategories(categories));
   };
 
+  
   useEffect(() => {
     getCategories();
   }, []);
@@ -26,8 +27,8 @@ const CategoryList = () => {
         <div className=" mt-4 row justify-content-center">
           {categories.map((category) => (
             <ListGroupItem key={`link--${category.id}`}><Category category={category} key={category.id} />
-            <Link to={`/categories/edit/${category.id}`}>Edit</Link>{" "}
-            <Link to={`/categories/delete/${category.id}`}>Delete</Link>{" "}
+            <Button outline color="primary"><Link to={`/categories/edit/${category.id}`}>Edit</Link></Button>{" "}
+            <Button outline color="danger"><Link to={`/categories/delete/${category.id}`}>Delete</Link></Button>
             </ListGroupItem>
           ))}
         </div>
