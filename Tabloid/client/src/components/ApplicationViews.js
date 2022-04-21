@@ -53,7 +53,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/categories/add" exact>
+        <Route path="/categories/add" >
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
@@ -61,7 +61,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route exact path="/reactions/add">
+        <Route path="/reactions/add">
           {isLoggedIn ? <AddReactions /> : <Redirect to="/login" />}
         </Route>
       </Switch>

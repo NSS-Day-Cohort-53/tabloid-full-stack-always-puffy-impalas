@@ -31,7 +31,7 @@ export const getCategoryById = (id) => {
       if (res.ok) {
         return res.json();
       } else {
-        throw new Error("Unknown error getting categories");
+        throw new Error("Unknown error getting category");
       }
     });
   });
@@ -39,14 +39,20 @@ export const getCategoryById = (id) => {
 
 export const addCategory = (category) => {
   return getToken().then((token) =>
-    fetch(_apiUrl, {
+    fetch(`${_apiUrl}`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(category),
-    }).then((resp) => resp.json())
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Error adding a category");
+      }
+    })
   );
 };
 
@@ -54,13 +60,19 @@ export const addCategory = (category) => {
 
 export const editCategory = (category) => {
   return getToken().then((token) => {
-    return fetch(`${_apiUrl}/${category.id}`, {
+    fetch(`${_apiUrl}/${category.id}`, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(category),
-    })
+    }).then((res) => {
+      if (res.ok) {
+        return res.status;
+      } else {
+        throw new Error("Error editing a cateogry");
+      }
+    });
   });
 };
