@@ -13,11 +13,28 @@ export const getAllTags = () => {
             if (res.ok) {
                 return res.json();
             } else {
-                throw new Error("Unknown error getting tags");
+                throw new Error("Unknown Error Getting Tags");
             }
         });
     });
 };
+
+export const getTagById = (id) => {
+    return getToken().then((token) => {
+      return fetch(`${_apiUrl}/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Unknown Error Getting Tags");
+        }
+      });
+    });
+  };
 
 export const createTag = (tag) => {
     return getToken().then((token) =>
@@ -32,7 +49,26 @@ export const createTag = (tag) => {
         if (resp.ok) {
             return resp.json();
         } else {
-            throw new Error("Unknown error creating tag");
+            throw new Error("Unknown Error Creating Tag");
         }
     })
 )};
+
+export const editTag = (tag) => {
+    return getToken().then((token) => {
+      fetch(`${_apiUrl}/${tag.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tag),
+      }).then((resp) => {
+        if (resp.ok) {
+          return resp.status
+        } else {
+          throw new Error("Error Editing a Tag");
+        }
+      });
+    });
+  };
