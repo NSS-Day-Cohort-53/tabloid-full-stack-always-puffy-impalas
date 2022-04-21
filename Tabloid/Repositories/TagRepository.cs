@@ -91,5 +91,30 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public void EditTag(Tag tag)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE Tag
+                            SET 
+                                [Name] = @name
+                                
+                            WHERE Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@Name", tag.Name);
+                    DbUtils.AddParameter(cmd, "@Id", tag.Id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+
+        }
     }
 }
