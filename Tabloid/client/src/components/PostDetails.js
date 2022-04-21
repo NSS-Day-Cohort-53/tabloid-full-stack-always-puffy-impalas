@@ -44,7 +44,8 @@ export const PostDetails = () => {
                 <CardImg alt="image" src={post.imageLocation} top width="75%" />
                 <CardTitle>{post.title}</CardTitle>
                 <CardText>
-                    <small className="text-muted">{post.userProfile?.displayName}</small>
+                    <small className="text-muted">Posted by {post.userProfile?.displayName}. </small>
+                    <small className="text-muted">Click to subscribe to {post.userProfile?.displayName}</small>
                 </CardText>
                 <CardText>{post.content}</CardText>
                 <CardText>
