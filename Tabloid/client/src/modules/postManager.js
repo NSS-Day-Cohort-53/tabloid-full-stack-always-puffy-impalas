@@ -55,7 +55,7 @@ export const addPost = (post) => {
     });
 };
 
-export const putPost = (post) => {
+export const editPost = (post) => {
     return getToken().then((token) => {
         return fetch(`${_apiUrl}/${post.id}`, {
             method: "PUT",

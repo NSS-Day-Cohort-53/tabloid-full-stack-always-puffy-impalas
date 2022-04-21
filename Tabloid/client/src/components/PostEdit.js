@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Container, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { getAllCategories } from "../modules/categoryManager.js";
-import { getPostById, putPost } from "../modules/postManager.js";
+import { getPostById, editPost } from "../modules/postManager.js";
 
 export const PostEdit = () => {
     const [post, setPost] = useState({});
@@ -22,7 +22,7 @@ export const PostEdit = () => {
     };
 
     const updatePost = () => {
-        putPost(post).then(() => history.push(`/posts/${post.id}`));
+        editPost(post).then(() => history.push(`/posts/${post.id}`));
     };
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export const PostEdit = () => {
                         id="title"
                         name="title"
                         type="text"
-                        value={post.title}
+                        value={post.title || ""}
                         onInput={handleInputChange}
                     />
                 </FormGroup>
@@ -51,7 +51,7 @@ export const PostEdit = () => {
                         id="content"
                         name="content"
                         type="textarea"
-                        value={post.content}
+                        value={post.content || ""}
                         onInput={handleInputChange}
                     />
                 </FormGroup>
@@ -61,7 +61,7 @@ export const PostEdit = () => {
                         id="imageLocation"
                         name="header"
                         type="url"
-                        value={post.imageLocation === null ? "" : post.imageLocation}
+                        value={post.imageLocation === null ? "" : post.imageLocation || ""}
                         onInput={handleInputChange}
                     />
                 </FormGroup>
@@ -72,7 +72,7 @@ export const PostEdit = () => {
                         required
                         name="category"
                         type="select"
-                        value={post.categoryId}
+                        value={post.categoryId || 0}
                         onChange={handleInputChange}
                     >
                         <option value="0">Select A Category</option>
@@ -89,14 +89,16 @@ export const PostEdit = () => {
                         id="publishDateTime"
                         name="date"
                         type="datetime-local"
-                        value={post.publishDateTime === null ? "" : post.publishDateTime}
+                        value={post.publishDateTime === null ? "" : post.publishDateTime || ""}
                         onInput={handleInputChange}
                     />
                 </FormGroup>
                 <Button disabled={!post.title || !post.content || !post.categoryId} onClick={(e) => updatePost()}>
                     Save
                 </Button>
-                <Button onClick={(e) => history.push(`/posts`)}>Cancel</Button>
+                <Button className="ml-2" onClick={(e) => history.push(`/posts`)}>
+                    Cancel
+                </Button>
             </Form>
         </Container>
     );
