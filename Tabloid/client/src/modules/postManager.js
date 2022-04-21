@@ -97,3 +97,15 @@ export const editPost = (post) => {
         });
     });
 };
+
+export const deletePost = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+    });
+};
