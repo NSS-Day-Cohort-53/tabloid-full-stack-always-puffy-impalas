@@ -18,6 +18,12 @@ namespace Tabloid.Controllers
             _reactionRepository = reactionRepository;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_reactionRepository.GetAll());
+        }
+
         [HttpPost]
         public IActionResult Post(Reaction reaction)
         {

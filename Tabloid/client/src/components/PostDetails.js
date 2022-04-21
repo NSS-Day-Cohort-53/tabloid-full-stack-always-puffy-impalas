@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+<<<<<<< HEAD
 import {
     Card,
     CardImg,
@@ -13,11 +14,16 @@ import {
     ModalBody,
     ModalFooter,
 } from "reactstrap";
-import { getPostById, deletePost } from "../modules/postManager.js";
+import { getPostById, deletePost, addReactionToPost, getReactionPostList } from "../modules/postManager.js";
+import { getReactions } from "../modules/reactionManager.js";
+import "../index.css";
+
 
 export const PostDetails = () => {
     const [post, setPost] = useState({});
     const [showModal, setModal] = useState(false);
+    const [reactions, setReactions] = useState([])
+    const [postReactions, setPostReactions] = useState([])
     const { id } = useParams();
     const history = useHistory();
     const getThePost = () => {
@@ -28,7 +34,15 @@ export const PostDetails = () => {
     };
     useEffect(() => {
         getThePost();
+        getReactions().then((data) => {
+            setReactions(data)
+        });
+        getReactionPostList().then((data) => setPostReactions(data))
     }, [id]);
+
+
+
+
     return (
         <Container>
             <Card>
@@ -59,6 +73,19 @@ export const PostDetails = () => {
                         </Modal>
                     </>
                 )}
+                <div className="reactionList">
+                    {reactions.map((r) => {
+                        return <button key={r.id} onClick={() => {
+                            const copy = {
+                                postId: post.id,
+                                reactionId: r.id
+                            }
+                            addReactionToPost(copy).then(() => {
+                                getReactionPostList().then(data => setPostReactions(data))
+                            })
+                        }}><img src={r.imageLocation} />{postReactions.filter(react => react.reactionId === r.id && react.postId === post.id).length}</button>
+                    })}
+                </div>
             </Card>
         </Container>
     );

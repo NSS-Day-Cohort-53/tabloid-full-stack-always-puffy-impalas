@@ -15,3 +15,20 @@ export const addReaction = (reaction) => {
         })
     })
 }
+
+export const getReactions = () => {
+    return getToken().then((token) => {
+        return fetch(`${reactionUrl}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Unknown error getting posts");
+            }
+        });
+    });
+};
