@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Container, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { getAllCategories } from "../modules/categoryManager.js";
-import { getPostById, editPost } from "../modules/postManager.js";
+import { getPostById, editPost, deletePost } from "../modules/postManager.js";
 
 export const PostEdit = () => {
     const [post, setPost] = useState({});

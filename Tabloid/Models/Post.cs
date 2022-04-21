@@ -28,5 +28,6 @@ namespace Tabloid.Models
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
         public List<Tag> Tags { get; set; }
+        public bool IsCurrentUserAuthor { get; set; }
     }
 }
