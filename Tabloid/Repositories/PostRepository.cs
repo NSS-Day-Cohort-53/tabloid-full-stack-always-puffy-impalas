@@ -140,9 +140,9 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"INSERT INTO PostReaction (PostId, ReactionId, UserProfileId)
                                         OUTPUT INSERTED.ID
                                         VALUES (@postId, @reactionId, @userProfileId)";
-                    cmd.Parameters.AddWithValue("@postId", postReaction.PostId);
-                    cmd.Parameters.AddWithValue("@reactionId", postReaction.ReactionId);
-                    cmd.Parameters.AddWithValue("@userProfileId", postReaction.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@postId", postReaction.PostId);
+                    DbUtils.AddParameter(cmd, "@reactionId", postReaction.ReactionId);
+                    DbUtils.AddParameter(cmd, "@userProfileId", postReaction.UserProfileId);
 
                     postReaction.Id = (int)cmd.ExecuteScalar();
                 }
