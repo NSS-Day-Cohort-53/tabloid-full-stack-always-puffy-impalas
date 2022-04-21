@@ -13,6 +13,7 @@ import { PostDetails } from "./PostDetails.js";
 import TagForm from "./TagForm";
 import PostForm from "./PostForm.js";
 import CategoryDelete from "./CategoryDelete";
+import { PostEdit } from "./PostEdit.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -21,7 +22,7 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/" exact>
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
         </Route>
-        
+
         <Route path="/login">
           <Login />
         </Route>
@@ -38,8 +39,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/posts/:id">
+        <Route path="/posts/:id(\d+)">
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/posts/edit/:id(\d+)">
+          {isLoggedIn ? <PostEdit /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/tags" exact>
@@ -54,14 +59,13 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/categories/add" >
+        <Route path="/categories/add">
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/categories/edit/:id">
+        <Route path="/categories/edit/:id(\d+)">
           {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
         </Route>
-
         <Route path="/categories/delete/:id(\d+)">
           {isLoggedIn ? <CategoryDelete /> : <Redirect to="/login" />}
         </Route>

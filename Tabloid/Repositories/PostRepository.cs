@@ -105,7 +105,6 @@ namespace Tabloid.Repositories
                 }
             }
         }
-
         public void AddPost(Post post)
         {
             using (var conn = Connection)
@@ -130,6 +129,79 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public void AddPostReaction(PostReaction postReaction)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO PostReaction (PostId, ReactionId, UserProfileId)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@postId, @reactionId, @userProfileId)";
+                    DbUtils.AddParameter(cmd, "@postId", postReaction.PostId);
+                    DbUtils.AddParameter(cmd, "@reactionId", postReaction.ReactionId);
+                    DbUtils.AddParameter(cmd, "@userProfileId", postReaction.UserProfileId);
+
+                    postReaction.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+        public List<PostReaction> GetPostReactions()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, ReactionId, PostId, UserProfileId 
+                                        FROM PostReaction";
+                    var reader = cmd.ExecuteReader();
+                    List<PostReaction> postReactions = new List<PostReaction>();
+                    while (reader.Read())
+                    {
+                        PostReaction postReaction = new PostReaction
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                            ReactionId = DbUtils.GetInt(reader, "ReactionId"),
+                            PostId = DbUtils.GetInt(reader, "PostId")
+                        };
+                        postReactions.Add(postReaction);
+                    }
+                    conn.Close();
+                    return postReactions;
+                }
+            }
+        }
+
+        public void UpdatePost(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Post
+                                        SET Title = @title,
+                                            Content = @content,
+                                            ImageLocation = @imageLocation,
+                                            PublishDateTime = @publishDateTime,
+                                            CategoryId = @categoryId
+                                        WHERE Id = @id";
+                    DbUtils.AddParameter(cmd, "@title", post.Title);
+                    DbUtils.AddParameter(cmd, "@content", post.Content);
+                    DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@publishDateTime", post.PublishDateTime);
+                    DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@id", post.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Post NewPostFromReader(SqlDataReader reader)
         {
             Post post = new Post()
@@ -166,14 +238,14 @@ namespace Tabloid.Repositories
                 },
                 Tags = new List<Tag>()
             };
-                if (DbUtils.IsNotDbNull(reader, "TagId"))
+            if (DbUtils.IsNotDbNull(reader, "TagId"))
+            {
+                post.Tags.Add(new Tag()
                 {
-                    post.Tags.Add(new Tag()
-                    {
-                        Id = DbUtils.GetInt(reader, "TagId"),
-                        Name = DbUtils.GetString(reader, "TagName")
-                    });
-                }
+                    Id = DbUtils.GetInt(reader, "TagId"),
+                    Name = DbUtils.GetString(reader, "TagName")
+                });
+            }
             return post;
         }
     }
