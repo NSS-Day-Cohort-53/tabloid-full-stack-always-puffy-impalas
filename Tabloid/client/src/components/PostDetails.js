@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardImg, CardText, CardTitle, Container } from "reactstrap";
+import { Card, CardImg, CardText, CardTitle, Container, Button } from "reactstrap";
+import { getUser } from "../modules/authManager.js";
 import { getPostById } from "../modules/postManager.js";
 
 export const PostDetails = () => {
@@ -24,6 +25,7 @@ export const PostDetails = () => {
                 <CardText>
                     <small className="text-muted">{post.publishDateTime}</small>
                 </CardText>
+                {post.isCurrentUserAuthor && <Button color="danger">Delete</Button>}
             </Card>
         </Container>
     );

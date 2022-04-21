@@ -39,9 +39,17 @@ namespace Tabloid.Controllers
                 return NotFound();
             }
             var currentUser = GetCurrentUserProfile();
+            if (post.UserProfileId == currentUser.Id)
+            {
+                post.IsCurrentUserAuthor = true;
+            }
+            else
+            {
+                post.IsCurrentUserAuthor = false;
+            }
             if ((post.PublishDateTime > DateTime.Now) || (!post.IsApproved))
             {
-                if (post.UserProfileId == currentUser.Id)
+                if (post.IsCurrentUserAuthor == true)
                 {
                     return Ok(post);
                 }
