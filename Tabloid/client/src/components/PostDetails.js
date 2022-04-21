@@ -22,6 +22,7 @@ export const PostDetails = () => {
     const [post, setPost] = useState({});
     const [showModal, setModal] = useState(false);
     const [reactions, setReactions] = useState([]);
+    const [isSubbed, setSubbed] = useState(false);
     const [postReactions, setPostReactions] = useState([]);
     const { id } = useParams();
     const history = useHistory();
@@ -51,9 +52,10 @@ export const PostDetails = () => {
                             className="text-muted"
                             onClick={() => {
                                 console.log("yo");
+                                setSubbed(!isSubbed);
                             }}
                         >
-                            Click to subscribe to {post.userProfile?.displayName}
+                            Click to {!isSubbed ? "subscribe" : "unsubscribe"} to {post.userProfile?.displayName}
                         </small>
                     </Link>
                 </CardText>
