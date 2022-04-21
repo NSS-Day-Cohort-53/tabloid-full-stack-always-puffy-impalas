@@ -16,6 +16,7 @@ import {
 import { getPostById, deletePost, addReactionToPost, getReactionPostList } from "../modules/postManager.js";
 import { getReactions } from "../modules/reactionManager.js";
 import "../index.css";
+import { Link } from "react-router-dom";
 
 export const PostDetails = () => {
     const [post, setPost] = useState({});
@@ -45,7 +46,16 @@ export const PostDetails = () => {
                 <CardTitle>{post.title}</CardTitle>
                 <CardText>
                     <small className="text-muted">Posted by {post.userProfile?.displayName}. </small>
-                    <small className="text-muted">Click to subscribe to {post.userProfile?.displayName}</small>
+                    <Link>
+                        <small
+                            className="text-muted"
+                            onClick={() => {
+                                console.log("yo");
+                            }}
+                        >
+                            Click to subscribe to {post.userProfile?.displayName}
+                        </small>
+                    </Link>
                 </CardText>
                 <CardText>{post.content}</CardText>
                 <CardText>
