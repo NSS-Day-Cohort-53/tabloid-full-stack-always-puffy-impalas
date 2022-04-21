@@ -54,3 +54,16 @@ export const addPost = (post) => {
         });
     });
 };
+
+export const editPost = (post) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/${post.id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(post),
+        });
+    });
+};
