@@ -28,7 +28,7 @@ export const PostEdit = () => {
     useEffect(() => {
         getPostById(id).then(setPost);
         getAllCategories().then(setCategories);
-    }, []);
+    }, [id]);
 
     return (
         <Container>
