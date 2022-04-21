@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-<<<<<<< HEAD
 import {
     Card,
     CardImg,
@@ -18,12 +17,11 @@ import { getPostById, deletePost, addReactionToPost, getReactionPostList } from 
 import { getReactions } from "../modules/reactionManager.js";
 import "../index.css";
 
-
 export const PostDetails = () => {
     const [post, setPost] = useState({});
     const [showModal, setModal] = useState(false);
-    const [reactions, setReactions] = useState([])
-    const [postReactions, setPostReactions] = useState([])
+    const [reactions, setReactions] = useState([]);
+    const [postReactions, setPostReactions] = useState([]);
     const { id } = useParams();
     const history = useHistory();
     const getThePost = () => {
@@ -35,13 +33,10 @@ export const PostDetails = () => {
     useEffect(() => {
         getThePost();
         getReactions().then((data) => {
-            setReactions(data)
+            setReactions(data);
         });
-        getReactionPostList().then((data) => setPostReactions(data))
+        getReactionPostList().then((data) => setPostReactions(data));
     }, [id]);
-
-
-
 
     return (
         <Container>
@@ -75,15 +70,27 @@ export const PostDetails = () => {
                 )}
                 <div className="reactionList">
                     {reactions.map((r) => {
-                        return <button key={r.id} onClick={() => {
-                            const copy = {
-                                postId: post.id,
-                                reactionId: r.id
-                            }
-                            addReactionToPost(copy).then(() => {
-                                getReactionPostList().then(data => setPostReactions(data))
-                            })
-                        }}><img src={r.imageLocation} />{postReactions.filter(react => react.reactionId === r.id && react.postId === post.id).length}</button>
+                        return (
+                            <button
+                                key={r.id}
+                                onClick={() => {
+                                    const copy = {
+                                        postId: post.id,
+                                        reactionId: r.id,
+                                    };
+                                    addReactionToPost(copy).then(() => {
+                                        getReactionPostList().then((data) => setPostReactions(data));
+                                    });
+                                }}
+                            >
+                                <img src={r.imageLocation} />
+                                {
+                                    postReactions.filter(
+                                        (react) => react.reactionId === r.id && react.postId === post.id
+                                    ).length
+                                }
+                            </button>
+                        );
                     })}
                 </div>
             </Card>
