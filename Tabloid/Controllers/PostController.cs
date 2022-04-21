@@ -4,6 +4,7 @@ using Tabloid.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,7 +39,7 @@ namespace Tabloid.Controllers
                 return NotFound();
             }
             var currentUser = GetCurrentUserProfile();
-            if ((post.PublishDateTime > System.DateTime.Now) || (!post.IsApproved))
+            if ((post.PublishDateTime > DateTime.Now) || (!post.IsApproved))
             {
                 if (post.UserProfileId == currentUser.Id)
                 {
@@ -72,8 +73,16 @@ namespace Tabloid.Controllers
 
         // POST api/<PostController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Post post)
         {
+            post.UserProfileId = GetCurrentUserProfile().Id;
+            post.CreateDateTime = DateTime.Now;
+            if (string.IsNullOrWhiteSpace(post.ImageLocation))
+            {
+                post.ImageLocation = null;
+            }
+            _postRepo.AddPost(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
         // PUT api/<PostController>/5

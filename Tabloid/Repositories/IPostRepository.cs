@@ -9,5 +9,6 @@ namespace Tabloid.Repositories
         public List<PostReaction> GetPostReactions();
         List<Post> GetApprovedPosts();
         Post GetById(int id);
+        void AddPost(Post post);
     }
 }

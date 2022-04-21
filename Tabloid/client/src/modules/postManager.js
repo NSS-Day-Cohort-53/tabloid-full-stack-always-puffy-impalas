@@ -36,6 +36,7 @@ export const getPostById = (id) => {
     });
 };
 
+<<<<<<< HEAD
 export const addReactionToPost = (postReaction) => {
     return getToken().then((token) => {
         return fetch(`${_apiUrl}/postReaction`, {
@@ -56,12 +57,31 @@ export const getReactionPostList = () => {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
+=======
+export const addPost = (post) => {
+    return getToken().then((token) => {
+        return fetch(_apiUrl, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(post),
+>>>>>>> main
         }).then((res) => {
             if (res.ok) {
                 return res.json();
             } else {
+<<<<<<< HEAD
                 throw new Error("Unknown error getting reactionPost list")
             }
         })
     })
 }
+=======
+                throw new Error("Unknown error posting post");
+            }
+        });
+    });
+};
+>>>>>>> main

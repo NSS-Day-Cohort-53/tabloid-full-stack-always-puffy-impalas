@@ -105,6 +105,31 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        public void AddPost(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Post (Title, Content, ImageLocation, CreateDateTime, PublishDateTime, IsApproved, CategoryId, UserProfileId)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@title, @content, @imageLocation, @createDate, @publishDate, @isApproved, @categoryId, @userProfileId)";
+
+                    DbUtils.AddParameter(cmd, "@title", post.Title);
+                    DbUtils.AddParameter(cmd, "@content", post.Content);
+                    DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@createDate", post.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@publishDate", post.PublishDateTime);
+                    DbUtils.AddParameter(cmd, "@isApproved", post.IsApproved);
+                    DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@userProfileId", post.UserProfileId);
+
+                    post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
         public void AddPostReaction(PostReaction postReaction)
         {
             using (var conn = Connection)
@@ -187,14 +212,14 @@ namespace Tabloid.Repositories
                 },
                 Tags = new List<Tag>()
             };
-                if (DbUtils.IsNotDbNull(reader, "TagId"))
+            if (DbUtils.IsNotDbNull(reader, "TagId"))
+            {
+                post.Tags.Add(new Tag()
                 {
-                    post.Tags.Add(new Tag()
-                    {
-                        Id = DbUtils.GetInt(reader, "TagId"),
-                        Name = DbUtils.GetString(reader, "TagName")
-                    });
-                }
+                    Id = DbUtils.GetInt(reader, "TagId"),
+                    Name = DbUtils.GetString(reader, "TagName")
+                });
+            }
             return post;
         }
     }

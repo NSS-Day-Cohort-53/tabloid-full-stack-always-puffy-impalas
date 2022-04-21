@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Tag from "./Tag";
 import { getAllTags } from "../modules/tagManager";
+import { Link } from "react-router-dom";
 
 export const TagList = () => {
   const [tags, setTags] = useState([]);
@@ -18,16 +19,17 @@ export const TagList = () => {
 
   return (
     <div>
-      <div className="container">     
+      <Link to="/tags/add" className="tag-link">
+        Add A New Tag
+      </Link>
+      <div className="container">
         <div className="row justify-content-center">
-            
           {tags.map((tag) => (
             <Tag tag={tag} key={tag.id} />
           ))}
         </div>
       </div>
-      </div>
-   
+    </div>
   );
 };
 
