@@ -93,10 +93,10 @@ export const PostEdit = () => {
                         onInput={handleInputChange}
                     />
                 </FormGroup>
-                <Button disabled={!post.title || !post.content || !post.categoryId} onClick={(e) => updatePost()}>
+                <Button disabled={!post.title || !post.content || !post.categoryId} onClick={() => updatePost()}>
                     Save
                 </Button>
-                <Button className="ml-2" onClick={(e) => history.push(`/posts`)}>
+                <Button className="ml-2" onClick={() => history.push(`/posts`)}>
                     Cancel
                 </Button>
             </Form>
