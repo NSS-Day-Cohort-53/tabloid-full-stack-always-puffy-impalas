@@ -12,6 +12,7 @@ import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 import TagForm from "./TagForm";
 import PostForm from "./PostForm.js";
+import CategoryDelete from "./CategoryDelete";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -59,6 +60,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/categories/edit/:id">
           {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/categories/delete/:id(\d+)">
+          {isLoggedIn ? <CategoryDelete /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/reactions/add">

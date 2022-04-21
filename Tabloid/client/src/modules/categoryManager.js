@@ -76,3 +76,20 @@ export const editCategory = (category) => {
     });
   });
 };
+
+export const deleteCategory = (id) => {
+  return getToken().then((token) =>
+    fetch(`${_apiUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return
+      } else {
+        throw new Error("Error deleting a category");
+      }
+    })
+  );
+};
