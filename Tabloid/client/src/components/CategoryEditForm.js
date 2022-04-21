@@ -50,7 +50,7 @@ const CategoryEditForm = () => {
     <Button disabled={!category.name} className="btn btn-primary" onClick={handleSave}>
       Submit
     </Button> {" "}
-    <Button onClick={(e) => history.push(`/posts`)}>Cancel</Button>
+    <Button onClick={(e) => history.push(`/categories`)}>Cancel</Button>
   </Form>
   );
 };
