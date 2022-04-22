@@ -31,11 +31,20 @@ namespace Tabloid.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<SubscriptionController>/5
-        [HttpGet("{postId}")]
-        public string Get(int postId)
+        // GET api/<SubscriptionController>/author/5
+        [HttpGet("/author/{authorId}")]
+        public IActionResult GetByAuthorId(int authorId)
         {
-            return "value";
+            UserProfile user = GetCurrentUserProfile();
+            bool isSubbed = _subRepo.SubCheck(user.Id, authorId);
+            if (isSubbed)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/<SubscriptionController>
@@ -54,6 +63,12 @@ namespace Tabloid.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepo.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

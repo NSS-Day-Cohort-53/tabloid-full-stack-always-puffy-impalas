@@ -4,7 +4,7 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    public class SubscriptionRepository : BaseRepository
+    public class SubscriptionRepository : BaseRepository, ISubscriptionRepository
     {
         public SubscriptionRepository(IConfiguration config) : base(config) { }
 
