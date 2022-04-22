@@ -119,5 +119,11 @@ namespace Tabloid.Controllers
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userProfileRepo.GetByFirebaseUserId(firebaseUserId);
         }
+
+        [HttpGet("PostByCategory")]
+        public IActionResult PostByCategory(int categoryId)
+        {
+            return Ok(_postRepo.GetPostByCategoryId(categoryId));
+        }
     }
 }
