@@ -41,7 +41,6 @@ export const PostDetails = () => {
     const doSubscribe = () => {
         if (isSubbed) {
             //unsubscribe
-            setSubbed(!isSubbed);
         } else {
             //subscribe
             addSubscription({ providerUserProfileId: post.userProfileId });
