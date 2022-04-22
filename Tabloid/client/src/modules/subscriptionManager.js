@@ -11,10 +11,8 @@ export const checkSubscription = (authorId) => {
             },
         }).then((res) => {
             if (res.ok) {
-                console.log("true");
                 return true;
             } else {
-                console.log("false");
                 return false;
             }
         });
