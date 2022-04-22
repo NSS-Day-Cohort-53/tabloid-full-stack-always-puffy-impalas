@@ -25,19 +25,13 @@ namespace Tabloid.Controllers
             _subRepo = subscriptionRepository;
             _userProfileRepo = userProfileRepository;
         }
-        // GET: api/<SubscriptionController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/<SubscriptionController>/author/5
-        [HttpGet("/author/{authorId}")]
-        public IActionResult GetByAuthorId(int authorId)
+        // GET api/<SubscriptionController>
+        [HttpGet]
+        public IActionResult GetByAuthorId(string authorId)
         {
             UserProfile user = GetCurrentUserProfile();
-            bool isSubbed = _subRepo.SubCheck(user.Id, authorId);
+            bool isSubbed = _subRepo.SubCheck(user.Id, int.Parse(authorId));
             if (isSubbed)
             {
                 return Ok();
@@ -50,8 +44,19 @@ namespace Tabloid.Controllers
 
         // POST api/<SubscriptionController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Subscription subscription)
         {
+            UserProfile user = GetCurrentUserProfile();
+            if (user == null || subscription.ProviderUserProfileId == 0)
+            {
+                return BadRequest();
+            }
+
+            subscription.SubscriberUserProfileId = user.Id;
+            subscription.BeginDateTime = DateTime.Now;
+            
+            _subRepo.Add(subscription);
+            return NoContent();
         }
 
         // PUT api/<SubscriptionController>/5

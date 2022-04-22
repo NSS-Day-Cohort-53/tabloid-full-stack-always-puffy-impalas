@@ -17,7 +17,7 @@ import { getPostById, deletePost, addReactionToPost, getReactionPostList } from 
 import { getReactions } from "../modules/reactionManager.js";
 import "../index.css";
 import { Link } from "react-router-dom";
-import { checkSubscription } from "../modules/subscriptionManager.js";
+import { addSubscription, checkSubscription } from "../modules/subscriptionManager.js";
 
 export const PostDetails = () => {
     const [post, setPost] = useState({});
@@ -28,12 +28,12 @@ export const PostDetails = () => {
     const { id } = useParams();
     const history = useHistory();
     const getThePost = () => {
-        getPostById(id)
-            .then((post) => {
-                setPost(post);
-                checkSubscription(post.userProfileId);
-            })
-            .then((result) => setSubbed(result));
+        getPostById(id).then((post) => {
+            setPost(post);
+            checkSubscription(post.userProfileId).then((result) => {
+                setSubbed(result);
+            });
+        });
     };
     const doDelete = () => {
         deletePost(post.id).then(() => history.push(`/posts`));
@@ -44,6 +44,7 @@ export const PostDetails = () => {
             setSubbed(!isSubbed);
         } else {
             //subscribe
+            addSubscription({ providerUserProfileId: post.userProfileId });
             setSubbed(!isSubbed);
         }
     };
