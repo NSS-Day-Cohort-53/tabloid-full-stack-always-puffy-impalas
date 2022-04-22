@@ -12,5 +12,7 @@ namespace Tabloid.Repositories
         void CreateTag(Tag tag);
 
         void EditTag(Tag tag); 
+
+        void DeleteTag(int Id);
     }
 }
