@@ -12,10 +12,18 @@ using Tabloid.Repositories;
 
 namespace Tabloid.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SubscriptionController : ControllerBase
     {
+        private readonly ISubscriptionRepository _subRepo;
+        private readonly IUserProfileRepository _userProfileRepo;
+        public SubscriptionController(ISubscriptionRepository subscriptionRepository, IUserProfileRepository userProfileRepository)
+        {
+            _subRepo = subscriptionRepository;
+            _userProfileRepo = userProfileRepository;
+        }
         // GET: api/<SubscriptionController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,8 +32,8 @@ namespace Tabloid.Controllers
         }
 
         // GET api/<SubscriptionController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{postId}")]
+        public string Get(int postId)
         {
             return "value";
         }
