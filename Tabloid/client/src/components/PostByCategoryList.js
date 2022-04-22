@@ -5,25 +5,24 @@ import { getPostByCategoryId } from "../modules/postManager.js";
 import Post from "./Post.js";
 
 export const PostByCategoryList = () => {
-    const {id} = useParams()
-    const [posts, setPosts] = useState([]);
+  const { id } = useParams();
+  const [posts, setPosts] = useState([]);
 
+  const getCategoryPosts = () => {
+    getPostByCategoryId(id).then((posts) => setPosts(posts));
+  };
 
-    const getCategoryPosts = () => {
-        getPostByCategoryId(id).then((posts) => setPosts(posts));
-    };
+  useEffect(() => {
+    getCategoryPosts();
+  }, [id]);
 
-    useEffect(() => {
-        getCategoryPosts();
-    }, [id]);
-
-    return (
-        <Container>
-            {posts.map((p) => (
-                <Post post={p} key={`categorypost--${p.id}`} />
-            ))}
-        </Container>
-    );
+  return (
+    <Container>
+      {posts.length === 0
+        ? `There are no posts to display for this category`
+        : posts.map((p) => <Post post={p} key={`categorypost--${p.id}`} />)}
+    </Container>
+  );
 };
 
 export default PostByCategoryList;
