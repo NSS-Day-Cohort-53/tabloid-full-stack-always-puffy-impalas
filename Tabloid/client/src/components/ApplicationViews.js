@@ -12,57 +12,73 @@ import TagList from "./TagList";
 import { PostDetails } from "./PostDetails.js";
 import TagForm from "./TagForm";
 import PostForm from "./PostForm.js";
+import CategoryDelete from "./CategoryDelete";
 import TagEdit from "./TagEdit.js"
 import { PostEdit } from "./PostEdit.js";
 
 export default function ApplicationViews({ isLoggedIn }) {
-    return (
-        <main>
-            <Switch>
-                <Route path="/" exact>
-                    {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
-                </Route>
+  return (
+    <main>
+      <Switch>
+        <Route path="/" exact>
+          {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/login">
-                    <Login />
-                </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
 
-                <Route path="/register">
-                    <Register />
-                </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
 
-                <Route path="/posts" exact>
-                    {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
-                </Route>
+        <Route path="/posts" exact>
+          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/posts/add">{isLoggedIn ? <PostForm /> : <Redirect to="/login" />}</Route>
+        <Route path="/posts/add">
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/posts/:id(\d+)">{isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}</Route>
+        <Route path="/posts/:id(\d+)">
+          {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/posts/edit/:id(\d+)">{isLoggedIn ? <PostEdit /> : <Redirect to="/login" />}</Route>
+        <Route path="/posts/edit/:id(\d+)">
+          {isLoggedIn ? <PostEdit /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/tags" exact>
-                    {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
-                </Route>
+        <Route path="/tags" exact>
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/tags/add">{isLoggedIn ? <TagForm /> : <Redirect to="/login" />}</Route>
+        <Route path="/tags/add">
+          {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/tags/edit/:id(\d+)" >
-                    {isLoggedIn ? <TagEdit /> : <Redirect to="/login" />}
-                </Route>
+        <Route path="/tags/edit/:id(\d+)" >
+            {isLoggedIn ? <TagEdit /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/categories" exact>
-                    {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
-                </Route>
+        <Route path="/categories" exact>
+            {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/categories/add">{isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}</Route>
+        <Route path="/categories/add">
+          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/categories/edit/:id(\d+)">
-                    {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
-                </Route>
+        <Route path="/categories/edit/:id(\d+)">
+          {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/categories/delete/:id(\d+)">
+          {isLoggedIn ? <CategoryDelete /> : <Redirect to="/login" />}
+        </Route>
 
-                <Route path="/reactions/add">{isLoggedIn ? <AddReactions /> : <Redirect to="/login" />}</Route>
-            </Switch>
-        </main>
-    );
+        <Route path="/reactions/add">
+          {isLoggedIn ? <AddReactions /> : <Redirect to="/login" />}
+        </Route>
+      </Switch>
+    </main>
+  );
 }
