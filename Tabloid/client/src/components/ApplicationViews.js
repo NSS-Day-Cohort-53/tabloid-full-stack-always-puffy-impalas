@@ -15,6 +15,7 @@ import PostForm from "./PostForm.js";
 import CategoryDelete from "./CategoryDelete";
 import TagEdit from "./TagEdit.js"
 import { PostEdit } from "./PostEdit.js";
+import PostByCategoryList from "./PostByCategoryList";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -46,6 +47,9 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/posts/edit/:id(\d+)">
           {isLoggedIn ? <PostEdit /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/posts/category/:id(\d+)">
+          {isLoggedIn ? <PostByCategoryList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/tags" exact>

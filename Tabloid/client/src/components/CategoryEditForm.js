@@ -43,7 +43,7 @@ const CategoryEditForm = () => {
         name="name"
         id="name"
         placeholder={category.name}
-        value={category.name}
+        value={category.name || ""}
         onChange={handleInputChange}
       />
     </FormGroup>

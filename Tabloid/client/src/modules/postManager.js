@@ -109,3 +109,20 @@ export const deletePost = (id) => {
         });
     });
 };
+
+export const getPostByCategoryId = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/PostByCategory?categoryId=${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Unknown error getting posts by category");
+            }
+        });
+    });
+};
