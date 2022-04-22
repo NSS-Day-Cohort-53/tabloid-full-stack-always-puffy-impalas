@@ -72,3 +72,20 @@ export const editTag = (tag) => {
       });
     });
   };
+
+  export const deleteTag = (id) => {
+    return getToken().then((token) =>
+      fetch(`${_apiUrl}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => {
+        if (res.ok) {
+          return
+        } else {
+          throw new Error("Error Deleting a Tag");
+        }
+      })
+    );
+  };
